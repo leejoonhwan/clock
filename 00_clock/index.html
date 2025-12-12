@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Clock</title>
+        <style>
+            body{
+                margin: 0;
+                background: #000000;
+                color: #e04463;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-family: monospace;
+                font-weight: bold;
+            }
+
+            #text-date{
+                margin-top: 32px;
+                font-size: 64px;
+                max-width: 90%;
+                text-align: center;
+            }
+
+            #clock{
+                margin-top: 64px;
+                width: 512px;
+                height: 512px;
+                border: 4px solid #ffffff;
+                border-radius: 50%;
+                position: relative;
+            }
+
+            #clock-last-day-gap{
+                width: 312.5px;
+                height: 312.5px;
+                border-radius: 50%;
+                background: conic-gradient(#000000 0deg 360deg, #404040 0deg 0deg);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            #clock-line{
+                width: 4px;
+                height: 250px;
+                background: #404040;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -100%);
+            }
+
+            #clock-center-dot{
+                width: 12px;
+                height: 12px;
+                background: #e04463;
+                border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            #clock-month-hand{
+                width: 6px;
+                height: 125px;
+                background: #ffffff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -100%);
+            }
+
+            #clock-day-hand{
+                width: 5px;
+                height: 156.25px;
+                background: #ffffff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -100%);
+            }
+
+            #clock-hour-hand{
+                width: 4px;
+                height: 187.5px;
+                background: #ffffff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -100%);
+            }
+
+            #clock-minute-hand{
+                width: 3px;
+                height: 218.75px;
+                background: #ffffff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -100%);
+            }
+
+            #clock-second-hand{
+                width: 2px;
+                height: 250px;
+                background: #ffffff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -100%);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="text-date">-----</div>
+
+        <div id="clock">
+            <div id="clock-last-day-gap"></div>
+            <div id="clock-line"></div>
+            <div id="clock-month-hand"></div>
+            <div id="clock-day-hand"></div>
+            <div id="clock-hour-hand"></div>
+            <div id="clock-minute-hand"></div>
+            <div id="clock-second-hand"></div>
+            <div id="clock-center-dot"></div>
+        </div>
+
+        <script>
+            const textDate = document.getElementById("text-date");
+            const dayGap = document.getElementById("clock-last-day-gap");
+            const monthHand = document.getElementById("clock-month-hand");
+            const dayHand = document.getElementById("clock-day-hand");
+            const hourHand = document.getElementById("clock-hour-hand");
+            const minuteHand = document.getElementById("clock-minute-hand");
+            const secondHand = document.getElementById("clock-second-hand");
+
+            function Clock()
+            {
+                const now = new Date();
+                const intyear = now.getFullYear();
+                const intmonth = now.getMonth();
+                const intday = now.getDate();
+                const inthour = now.getHours();
+                const intminute= now.getMinutes();
+                const intsecond = now.getSeconds();
+
+                let fullday = new Date(intyear, intmonth + 1, 0).getDate();
+
+                const monthDeg = (intmonth / 12 * 360) + ((intday - 1) / fullday * 30) - 180;
+                const dayDeg = ((intday - 1) / 31 * 360) + (inthour / 24 * (360 / 31)) - 180;
+                const hourDeg = (inthour / 24 * 360) + (intminute / 60 * 15) - 180;
+                const minuteDeg = (intminute / 60 * 360) + (intsecond / 60 * 6) - 180;
+                const secondDeg = (intsecond / 60 * 360) - 180;
+            
+                dayGap.style.background = `conic-gradient(#000000 0deg ${360 / 31 * (fullday)}deg, #404040 ${360 / 31 * (fullday)}deg 360deg)`;
+                monthHand.style.transform = `translate(-50%, -50%) rotate(${monthDeg}deg) translateY(50%)`;
+                dayHand.style.transform = `translate(-50%, -50%) rotate(${dayDeg}deg) translateY(50%)`;
+                hourHand.style.transform = `translate(-50%, -50%) rotate(${hourDeg}deg) translateY(50%)`;
+                minuteHand.style.transform = `translate(-50%, -50%) rotate(${minuteDeg}deg) translateY(50%)`;
+                secondHand.style.transform = `translate(-50%, -50%) rotate(${secondDeg}deg) translateY(50%)`;
+
+                const year = String(intyear);
+                const month = String(intmonth + 1).padStart(2, "0");
+                const day = String(intday).padStart(2, "0");
+                const hour = String(inthour).padStart(2, "0");
+                const minute = String(intminute).padStart(2, "0");
+                const second = String(intsecond).padStart(2, "0");
+
+                textDate.textContent = `${year}-${month}-${day}-${hour}-${minute}-${second}`;
+            }
+
+            setInterval(Clock, 100)
+        </script>
+    </body>
+</html>
