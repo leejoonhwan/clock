@@ -1,3 +1,3 @@
 clock
 
-00 = [text](https://leejoonhwan.github.io/clock/00_clock/index.html)
+[00](https://leejoonhwan.github.io/clock/00_clock/index.html)
