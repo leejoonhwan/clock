@@ -1,3 +1,3 @@
 clock
 
-[00](https://leejoonhwan.github.io/clock/00_clock/index.html)
+[00_clock](https://leejoonhwan.github.io/clock/00_clock/index.html)
