@@ -112,6 +112,17 @@
                 left: 50%;
                 transform: translate(-50%, -100%);
             }
+
+            #clock-year-text{
+                color: #ffffff;
+                font-family: monospace;
+                font-size: 32px;
+                font-weight: bold;
+                position: absolute;
+                top: 87.5%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
         </style>
     </head>
     <body>
@@ -119,6 +130,7 @@
 
         <div id="clock">
             <div id="clock-last-day-gap"></div>
+            <div id="clock-year-text">-</div>
             <div id="clock-line"></div>
             <div id="clock-month-hand"></div>
             <div id="clock-day-hand"></div>
@@ -130,6 +142,7 @@
 
         <script>
             const textDate = document.getElementById("text-date");
+            const textYear = document.getElementById("clock-year-text");
             const dayGap = document.getElementById("clock-last-day-gap");
             const monthHand = document.getElementById("clock-month-hand");
             const dayHand = document.getElementById("clock-day-hand");
@@ -170,6 +183,7 @@
                 const second = String(intsecond).padStart(2, "0");
 
                 textDate.textContent = `${year}-${month}-${day}-${hour}-${minute}-${second}`;
+                textYear.textContent = `${year}`;
             }
 
             setInterval(Clock, 100)
